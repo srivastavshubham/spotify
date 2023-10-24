@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes,Navigate,Outlet} from "react-router-dom";
+import Home from './components/home';
+
+const Error = (props) => {
+  return (
+    <div>
+      <div style={{ textAlign:'center' }}>
+        <i
+          className="fa fa-ban"
+          aria-hidden="true"
+          style={{ fontSize: "100px",color:'red' }}
+        ></i>
+        <br />
+        <br />
+        <h2>This Page Is Under Maintainance</h2>
+      </div>
+    </div>
+  );
+};
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+    <Routes>
+      <Route exact path="/" element={<Home/>} />
+      <Route exact path="/*" element={<Error />} />
+    </Routes>
+    </Router>
   );
 }
 
-export default App;
+export default App
