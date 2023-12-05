@@ -1,34 +1,29 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes,Navigate,Outlet} from "react-router-dom";
-import Home from './components/home';
-
-const Error = (props) => {
-  return (
-    <div>
-      <div style={{ textAlign:'center' }}>
-        <i
-          className="fa fa-ban"
-          aria-hidden="true"
-          style={{ fontSize: "100px",color:'red' }}
-        ></i>
-        <br />
-        <br />
-        <h2>This Page Is Under Maintainance</h2>
-      </div>
-    </div>
-  );
-};
-
+import React, { useEffect } from 'react';
+import Login from './components/login';
+import { useStateProvider } from './utils/stateProvider';
+import { reducerCases } from './utils/constant';
+import Spotify from './components/spotify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+
+  const [{token},dispatch]=useStateProvider()
+
+  useEffect(()=>{
+    const hash = window.location.hash
+    if (hash){
+      const token = hash.substring(1).split("&")[0].split("=")[1];
+      dispatch({type:reducerCases.SET_TOKEN,token})
+    }
+  },[token,dispatch])
+
   return (
-    <Router>
-    <Routes>
-      <Route exact path="/" element={<Home/>} />
-      <Route exact path="/*" element={<Error />} />
-    </Routes>
-    </Router>
-  );
+      <>
+       <ToastContainer />
+      {token ? <Spotify/>:<Login/>}
+      </>
+    );
 }
 
 export default App
