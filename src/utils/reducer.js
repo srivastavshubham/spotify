@@ -56,12 +56,6 @@ const reducer = (state, action)=>{
                 selectedPlaylistId:action.selectedPlaylistId,
             }
         } 
-        case reducerCases.SET_SEARCH:{
-            return{
-                ...state,
-                searchResult:action.searchResult,
-            }
-        } 
         default:
             return state;
     }
